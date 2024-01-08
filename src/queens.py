@@ -20,7 +20,6 @@ class Queen:
     def __sub__(self, other: Queen):
         return self.row - other.row
 
-
     def possible_moves(self, n) -> list[Queen]:
         return [Queen(i) for i in range(0, n) if i != self.row]
 
@@ -47,6 +46,7 @@ class Board:
         for i in identifier:
             assert isinstance(i, str)
 
+            # Ensure the passed identifier is valid
             if i == cls.NON_QUEEN:
                 b.add_queen(None)
                 continue
@@ -56,24 +56,26 @@ class Board:
                     f"ID must be composed of digits or {cls.NON_QUEEN}"
                 )
 
+            # Add the queen
             i = int(i)
             b.add_queen(Queen(i))
 
         return b
 
     def add_queen(self, queen: Queen | None) -> Board:
-        if self.available >= self.n:
+
+        # Check board limits
+        if self.available >= self.n or (queen and queen.row >= self.n):
             raise ValueError("Exceeded Board Limit")
 
-        if queen and queen.row >= self.n:
-            raise ValueError("Exceeded Board Limit")
-
+        # Add the queen
         self.queens[self.available] = queen
         self.available += 1
 
         return self
 
     def add_queens(self, *queens: Queen | None) -> Board:
+        # Add any amount of queens to the board
         for queen in queens:
             self.add_queen(queen)
 
@@ -86,17 +88,18 @@ class Board:
                 second_ind: int,
                 second_queen: Queen | None
             ) -> int:
+        # Checks how many attacks are found between the two given queens
         attacks = 0
 
-        if first_ind == second_ind:
+        # Skip if we are attacking ourselves
+        if first_ind == second_ind or not (first_queen and second_queen):
             return attacks
 
-        if not (first_queen and second_queen):
-            return attacks
-
+        # Straight ahead attack
         if first_queen == second_queen:
             attacks += 1
 
+        # Diagonal attack
         if abs(first_ind - second_ind) == abs(first_queen - second_queen):
             attacks += 1
 
@@ -104,28 +107,35 @@ class Board:
 
     @property
     def num_attacking(self) -> int:
-
+        # Count the total number of attacks being made
         attacks = 0
         for first_ind, first_queen in enumerate(self.queens):
             for second_ind, second_queen in enumerate(self.queens):
+
+                # For every queen pair, count its attacks
                 attacks += self.compare_queens(
                     first_ind, first_queen, second_ind, second_queen
                 )
 
+        # An attack is inherently done in pairs (can't attack a queen if there
+        # aren't 2 queens). We divide by 2 to retrieve the number of attack
+        # pairs
         return attacks//2
 
     @property
     def conflicting_queens(self) -> set[tuple[int, Queen]]:
-
+        # Retrieve a set of queens (and their indices) that are attacking
         conflicting = set()
 
         for first_ind, first_queen in enumerate(self.queens):
             for second_ind, second_queen in enumerate(self.queens):
 
+                # If we already have this pairing
                 if (first_ind, first_queen) in conflicting and \
                     (second_ind, second_queen) in conflicting:
                     continue
 
+                # If there is an attack
                 if self.compare_queens(
                     first_ind, first_queen, second_ind, second_queen
                 ):
@@ -144,12 +154,13 @@ class Board:
 
     @property
     def possible_moves(self) -> list[Board]:
+        # Retrieve a list of all possible moves from this Board
         possible_boards: list[Board] = []
 
         for ind, curr_queen in enumerate(self.queens):
             if not curr_queen:
                 continue
-
+            # Add the specified queens' possible moves
             possible_boards += self.possible_moves_part(ind, curr_queen)
 
         return possible_boards
@@ -158,6 +169,7 @@ class Board:
 
         possible_boards = []
 
+        # Add every possible position for the given queen
         for possible_queen in curr_queen.possible_moves(self.n):
             b = Board.from_str(repr(self))
             b.queens[index] = possible_queen
@@ -166,6 +178,8 @@ class Board:
         return possible_boards
 
     def __str__(self) -> str:
+        # Print the board in a pretty way :)
+
         matrix_repr = [
             [self.NON_QUEEN for _ in range(self.n)] for _ in range(self.n)
         ]
@@ -179,15 +193,8 @@ class Board:
         return "\n".join(["  ".join(i) for i in matrix_repr])
 
     def __repr__(self) -> str:
+        # Print the board in an ugly way
+        # This gives us easy access to the string identifier of a Board
         return "".join(
             [repr(queen) if queen else self.NON_QUEEN for queen in self.queens]
         )
-
-if __name__ == "__main__":
-    b = Board.from_str("0123")
-
-    print(b)
-    # print(repr(b))
-    print(b.num_attacking)
-    print("--------")
-

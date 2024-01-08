@@ -48,9 +48,13 @@ class Solver:
         best = board
         while True:
             neighbor = min(best.possible_moves, key=lambda x: x.num_attacking)
-            # Once there are no more better neighbors, exit
+
+            # Once there are no more better neighbors, exit. We have reached
+            # a local maxima
             if neighbor >= best:
                 return best, cost
+
+            # Prepare for the next iteration
             best = neighbor
             cost += 1
 
@@ -94,22 +98,27 @@ class Solver:
 
     @staticmethod
     # @time_solver
-    def min_conflicts(board: Board, max_steps: int = 10_000) -> tuple[Board, int]:
+    def min_conflicts(board: Board, max_steps: int = 9999) -> tuple[Board, int]:
 
+        cost = 0
         current = board
         conflict: Queen
-        cost = 0
         for _ in range(max_steps):
 
+            # If we find a solution, exit
             if not current.num_attacking:
                 return current, cost
 
+            # Retrieve a random queen that's under attack
             con_ind, conflict = random.choice(list(current.conflicting_queens))
+
+            # Move it out of danger
             min_conflict = min(
                 current.possible_moves_part(con_ind, conflict),
                 key=lambda x: x.num_attacking
             )
 
+            # Prepare for the next iteration
             current = min_conflict
             cost += 1
 
@@ -123,15 +132,18 @@ def attempt(total_trials: int, solver: Callable[..., tuple[Board, int]], *args):
     running_cost = 0
     while trials > 0:
 
+        # Some simple logging
         if trials == total_trials or not trials % 100:
             print(f"{trials} trials remaining. {correct} correct so far.")
 
+        # Perform the solving
         inp = Board.random_fill(8)
         out, cost = solver(inp, *args)
         running_cost += cost
         if out.num_attacking == 0:
             correct += 1
 
+            # Print the first 3 correct outputs
             if correct <= 3:
                 print("INPUT\n", inp, "\nAttacks: ", inp.num_attacking)
                 print("OUTPUT\n", out)
@@ -139,6 +151,7 @@ def attempt(total_trials: int, solver: Callable[..., tuple[Board, int]], *args):
 
         trials -= 1
 
+    # Print some statistics
     print(
         f"{correct/(total_trials-trials) * 100}% of trials were correct. " +
         f"({correct} correct trials out of {(total_trials-trials)} trials). " +

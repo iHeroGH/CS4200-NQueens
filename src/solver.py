@@ -8,7 +8,7 @@ from ga_utils import GeneticAlgorithm
 
 def time_solver(
             solver: Callable[..., tuple[Board, int]]
-        ) -> Callable[..., tuple[Board, int]]:
+        ) -> Callable[..., tuple[Board, int, float]]:
     """
     Defines a decorator for timing how long it took for a solver method (which
     returns a Board) to execute.
@@ -25,23 +25,26 @@ def time_solver(
     -------
     wrapper : Callable[..., tuple[Board, int]]
         The wrapper function that took any arguments passed in, passed it to the
-        Solver, timed the solve time, then returned the created Board and cost
+        Solver, timed the solve time, then returned the created Board, cost,
+        and running time
     """
 
-    def wrapper(*args: Any) -> tuple[Board, int]:
+    def wrapper(*args: Any) -> tuple[Board, int, float]:
         start_time = time()
         board, cost = solver(*args)
         duration = time() - start_time
 
-        print(f"({solver.__name__}) Time Taken: {duration / 60:.4f} minutes")
-        return board, cost
+        # print(f"({solver.__name__}) Time Taken: {duration / 60:.4f} minutes")
+        return board, cost, duration
+
+    wrapper.__name__ = solver.__name__
 
     return wrapper
 
 class Solver:
 
     @staticmethod
-    # @time_solver
+    @time_solver
     def hill_climb(board: Board) -> tuple[Board, int]:
 
         cost = 0
@@ -59,10 +62,10 @@ class Solver:
             cost += 1
 
     @staticmethod
-    # @time_solver
+    @time_solver
     def simulated_annealing(
                 board: Board,
-                cooling_factor: float = 0.75,
+                cooling_factor: float = 0.80,
                 initial_temperature: float = 500_000
             ) -> tuple[Board, int]:
 
@@ -91,13 +94,13 @@ class Solver:
         return current, cost
 
     @staticmethod
-    # @time_solver
+    @time_solver
     def genetic_algorithm(board: Board, log: bool = False) -> tuple[Board, int]:
         ga = GeneticAlgorithm(board, log)
         return ga.best, 0
 
     @staticmethod
-    # @time_solver
+    @time_solver
     def min_conflicts(board: Board, max_steps: int = 9999) -> tuple[Board, int]:
 
         cost = 0
@@ -124,12 +127,19 @@ class Solver:
 
         return current, cost
 
-def attempt(total_trials: int, solver: Callable[..., tuple[Board, int]], *args):
+def attempt(
+        total_trials: int,
+        solver: Callable[..., tuple[Board, int, float]],
+        *args
+    ):
+    # Attempts a given solver(*args) for a given amount of trials
+
     print(f"({solver.__name__})")
 
-    trials = total_trials
-    correct = 0
-    running_cost = 0
+    trials: int = total_trials
+    correct: int = 0
+    running_cost: int = 0
+    running_duration: float = 0
     while trials > 0:
 
         # Some simple logging
@@ -138,8 +148,9 @@ def attempt(total_trials: int, solver: Callable[..., tuple[Board, int]], *args):
 
         # Perform the solving
         inp = Board.random_fill(8)
-        out, cost = solver(inp, *args)
+        out, cost, duration = solver(inp, *args)
         running_cost += cost
+        running_duration += duration
         if out.num_attacking == 0:
             correct += 1
 
@@ -151,12 +162,16 @@ def attempt(total_trials: int, solver: Callable[..., tuple[Board, int]], *args):
 
         trials -= 1
 
+    # If there is an early exit of some kind
+    complete_trials = total_trials - trials
+
     # Print some statistics
     print(
-        f"{correct/(total_trials-trials) * 100}% of trials were correct. " +
-        f"({correct} correct trials out of {(total_trials-trials)} trials). " +
-        f"Average Cost: {running_cost / (total_trials-trials)}."
+        f"{correct/(complete_trials) * 100}% of trials were correct. ",
+        f"({correct} correct trials out of {(complete_trials)} trials)."
     )
+    print(f"Average Cost: {running_cost / (complete_trials)}.")
+    print(f"Average Time Taken: {(running_duration / (complete_trials)):.4f}s.")
     print()
 
 

@@ -1,27 +1,35 @@
 (hill_climb)
 500 trials remaining. 0 correct so far.
-400 trials remaining. 17 correct so far.
-300 trials remaining. 27 correct so far.
-200 trials remaining. 44 correct so far.
-100 trials remaining. 56 correct so far.
-14.399999999999999% of trials were correct. (72 correct trials out of 500 trials). Average Cost: 3.194.
+400 trials remaining. 13 correct so far.
+300 trials remaining. 31 correct so far.
+200 trials remaining. 45 correct so far.
+100 trials remaining. 57 correct so far.
+14.2% of trials were correct.
+(71 correct trials out of 500 trials). Average Cost: 3.214.
+Average Time Taken: 0.0041s.
 
 (simulated_annealing)
 500 trials remaining. 0 correct so far.
-400 trials remaining. 94 correct so far.
-300 trials remaining. 185 correct so far.
-200 trials remaining. 279 correct so far.
-100 trials remaining. 373 correct so far.
-93.8% of trials were correct. (469 correct trials out of 500 trials). Average Cost: 728.822.
+400 trials remaining. 95 correct so far.
+300 trials remaining. 194 correct so far.
+200 trials remaining. 291 correct so far.
+100 trials remaining. 387 correct so far.
+96.6% of trials were correct. (483 correct trials out of 500 trials).
+Average Cost: 717.372.
+Average Time Taken: 0.1602s.
 
 (genetic_algorithm)
 10 trials remaining. 0 correct so far.
-50.0% of trials were correct. (5 correct trials out of 10 trials). Average Cost: 0.0. # GA doesn't have a cost calculation. Default 0
+50.0% of trials were correct. (5 correct trials out of 10 trials).
+Average Cost: 0.0.
+Average Time Taken: 4.9675s.
 
 (min_conflicts)
 500 trials remaining. 0 correct so far.
 400 trials remaining. 97 correct so far.
-300 trials remaining. 192 correct so far.
-200 trials remaining. 290 correct so far.
-100 trials remaining. 388 correct so far.
-97.6% of trials were correct. (488 correct trials out of 500 trials). Average Cost: 285.712.
+300 trials remaining. 196 correct so far.
+200 trials remaining. 295 correct so far.
+100 trials remaining. 395 correct so far.
+98.8% of trials were correct. (494 correct trials out of 500 trials).
+Average Cost: 164.956.
+Average Time Taken: 0.0232s.

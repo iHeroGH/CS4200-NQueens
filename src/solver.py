@@ -127,6 +127,34 @@ class Solver:
 
         return current, cost
 
+    @staticmethod
+    @time_solver
+    def random_walk(
+            board: Board,
+            population_size: int = 50_000,
+        ) -> tuple[Board, int]:
+
+        cost = 0
+        population = [
+            Board.random_fill(board.n) for _ in range(population_size)
+        ]
+
+        while True:
+            for index, individual in enumerate(population):
+
+                if not individual.num_attacking:
+                    return individual, cost
+
+                else:
+                    randomly_generated = Board.random_fill()
+
+                    if not randomly_generated.num_attacking:
+                        return randomly_generated, cost
+
+                    population[index] = randomly_generated
+
+                cost += 1
+
 def attempt(
         total_trials: int,
         solver: Callable[..., tuple[Board, int, float]],

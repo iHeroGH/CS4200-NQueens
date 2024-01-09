@@ -20,9 +20,9 @@ Average Time Taken: 0.1602s.
 
 (genetic_algorithm)
 10 trials remaining. 0 correct so far.
-50.0% of trials were correct. (5 correct trials out of 10 trials).
-Average Cost: 0.0.
-Average Time Taken: 4.9675s.
+70.0% of trials were correct.  (7 correct trials out of 10 trials).
+Average Cost: 4.2.
+Average Time Taken: 3.4676s.
 
 (min_conflicts)
 500 trials remaining. 0 correct so far.

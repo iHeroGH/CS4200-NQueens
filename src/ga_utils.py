@@ -80,6 +80,10 @@ class SelectionMethods:
 
         return parent
 
+    @staticmethod
+    def random_selection(population: list[Board]) -> Board:
+        return random.choice(population)
+
 class GeneticAlgorithm:
 
     # Some configuration values
@@ -100,9 +104,8 @@ class GeneticAlgorithm:
         self.log = log
 
         # Does the generation loop of the algorithm
-        found_population = self.gen_loop()
+        found_population, self.cost = self.gen_loop()
         self.best = GeneticAlgorithm.get_best_individual(found_population)
-
         if self.log:
             print(f"Best found has {self.best.num_attacking} attacks.")
 
@@ -131,7 +134,7 @@ class GeneticAlgorithm:
 
         return population
 
-    def gen_loop(self) -> list[Board]:
+    def gen_loop(self) -> tuple[list[Board], int]:
 
         # Initialization
         current_population = self.initialize_population()
@@ -142,20 +145,39 @@ class GeneticAlgorithm:
         # Generation loop
         for i in range(GeneticAlgorithm.NUM_GENERATIONS):
 
+            # sorted_population = sorted(
+            #     current_population,
+            #     key=lambda p: p.num_attacking
+            # )
+
             # Implement elitism. The best individual of each generation will
             # always get passed along to the next generation.
             best = GeneticAlgorithm.get_best_individual(current_population)
             next_population = [best]
 
+            # If we already found a solution, early exit
+            if not best.num_attacking:
+                current_population = next_population
+                return current_population, i - 1
+
+            # # Filtering
+            # percentile_fitness = sorted_population[
+            #     (7*len(current_population))//10
+            # ].num_attacking
+
+            # acceptable_subset = [
+            #     p for p in sorted_population
+            #     if p.num_attacking >= percentile_fitness
+            # ]
+
+            # for index, individual in enumerate(current_population):
+            #     if individual.num_attacking >= percentile_fitness:
+            #         current_population[index] = random.choice(acceptable_subset)
+
             if not i % 5 and self.log:
                 print(
                     f"Best at generation {i} has {best.num_attacking} attacks."
                 )
-
-            # If we already found a solution, early exit
-            if not best.num_attacking:
-                current_population = next_population
-                return current_population
 
             # Fill the next population
             while len(next_population) < GeneticAlgorithm.NUM_INDIVIDUALS:
@@ -185,7 +207,7 @@ class GeneticAlgorithm:
             # Prepare for next iteration
             current_population = next_population
 
-        return current_population
+        return current_population, GeneticAlgorithm.NUM_GENERATIONS
 
     @staticmethod
     def crossover(parent_one: Board, parent_two: Board):

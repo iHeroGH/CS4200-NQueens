@@ -97,7 +97,7 @@ class Solver:
     @time_solver
     def genetic_algorithm(board: Board, log: bool = False) -> tuple[Board, int]:
         ga = GeneticAlgorithm(board, log)
-        return ga.best, 0
+        return ga.best, ga.cost
 
     @staticmethod
     @time_solver

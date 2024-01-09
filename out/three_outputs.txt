@@ -130,71 +130,70 @@ Q  -  -  -  -  -  -  -
 Average Cost: 1004.6.
 Average Time Taken: 0.2388s.
 
-(genetic_algorithm)
 10 trials remaining. 0 correct so far.
 INPUT
--  -  Q  -  -  -  -  -
--  -  -  -  -  -  -  Q
--  Q  -  -  -  -  -  -
--  -  -  Q  -  -  -  -
--  -  -  -  -  -  Q  -
+Q  -  -  -  -  -  -  -
+-  -  -  -  -  -  -  -
 -  -  -  -  Q  Q  -  -
+-  -  -  -  -  -  Q  -
 -  -  -  -  -  -  -  -
-Q  -  -  -  -  -  -  -
-Attacks:  5
+-  -  -  -  -  -  -  -
+-  Q  Q  -  -  -  -  -
+-  -  -  Q  -  -  -  Q
+Attacks:  7
 OUTPUT
--  -  -  -  Q  -  -  -
--  -  Q  -  -  -  -  -
+-  Q  -  -  -  -  -  -
+-  -  -  -  -  Q  -  -
 Q  -  -  -  -  -  -  -
 -  -  -  -  -  -  Q  -
--  Q  -  -  -  -  -  -
--  -  -  -  -  -  -  Q
--  -  -  -  -  Q  -  -
 -  -  -  Q  -  -  -  -
+-  -  -  -  -  -  -  Q
+-  -  Q  -  -  -  -  -
+-  -  -  -  Q  -  -  -
 ||||||||||||||||||||||||||||||||||||||||||||||
 INPUT
--  -  -  Q  -  -  -  -
+-  -  -  -  -  Q  -  -
+-  -  Q  -  -  -  -  -
+-  -  -  -  -  -  Q  -
 -  -  -  -  -  -  -  -
+-  Q  -  Q  -  -  -  -
 -  -  -  -  Q  -  -  -
--  -  -  -  -  -  -  -
--  -  Q  -  -  Q  -  -
--  -  -  -  -  -  -  -
-Q  -  -  -  -  -  Q  -
--  Q  -  -  -  -  -  Q
-Attacks:  8
-OUTPUT
--  -  -  Q  -  -  -  -
 Q  -  -  -  -  -  -  -
--  -  -  -  Q  -  -  -
 -  -  -  -  -  -  -  Q
+Attacks:  3
+OUTPUT
 -  -  -  -  -  Q  -  -
 -  -  Q  -  -  -  -  -
 -  -  -  -  -  -  Q  -
 -  Q  -  -  -  -  -  -
+-  -  -  Q  -  -  -  -
+-  -  -  -  -  -  -  Q
+Q  -  -  -  -  -  -  -
+-  -  -  -  Q  -  -  -
 ||||||||||||||||||||||||||||||||||||||||||||||
 INPUT
 -  -  -  -  -  -  -  -
--  -  -  -  -  -  -  Q
+-  Q  -  -  -  -  -  -
 -  -  -  -  -  -  -  -
--  -  -  Q  -  -  -  -
--  -  Q  -  -  -  -  -
--  Q  -  -  Q  Q  -  -
+-  -  -  -  Q  -  -  Q
+-  -  Q  Q  -  Q  Q  -
+Q  -  -  -  -  -  -  -
 -  -  -  -  -  -  -  -
-Q  -  -  -  -  -  Q  -
-Attacks:  9
+-  -  -  -  -  -  -  -
+Attacks:  10
 OUTPUT
--  -  -  -  Q  -  -  -
--  -  -  -  -  -  -  Q
 -  -  -  Q  -  -  -  -
+-  Q  -  -  -  -  -  -
+-  -  -  -  -  -  -  Q
+-  -  -  -  Q  -  -  -
+-  -  -  -  -  -  Q  -
 Q  -  -  -  -  -  -  -
 -  -  Q  -  -  -  -  -
 -  -  -  -  -  Q  -  -
--  Q  -  -  -  -  -  -
--  -  -  -  -  -  Q  -
 ||||||||||||||||||||||||||||||||||||||||||||||
-90.0% of trials were correct.  (9 correct trials out of 10 trials).
-Average Cost: 0.0.
-Average Time Taken: 2.8835s.
+50.0% of trials were correct.  (5 correct trials out of 10 trials).
+Average Cost: 5.3.
+Average Time Taken: 4.2692s.
 
 (min_conflicts)
 25 trials remaining. 0 correct so far.

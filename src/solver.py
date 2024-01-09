@@ -156,8 +156,8 @@ def attempt(
 
             # Print the first 3 correct outputs
             if correct <= 3:
-                print("INPUT\n", inp, "\nAttacks: ", inp.num_attacking)
-                print("OUTPUT\n", out)
+                print(f"INPUT\n{inp}", "\nAttacks: ", inp.num_attacking)
+                print(f"OUTPUT\n{out}")
                 print("||||||||||||||||||||||||||||||||||||||||||||||")
 
         trials -= 1

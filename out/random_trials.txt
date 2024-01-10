@@ -4,8 +4,8 @@
 300 trials remaining. 31 correct so far.
 200 trials remaining. 45 correct so far.
 100 trials remaining. 57 correct so far.
-14.2% of trials were correct.
-(71 correct trials out of 500 trials). Average Cost: 3.214.
+14.2% of trials were correct. (71 correct trials out of 500 trials).
+Average Cost: 3.214.
 Average Time Taken: 0.0041s.
 
 (simulated_annealing)
